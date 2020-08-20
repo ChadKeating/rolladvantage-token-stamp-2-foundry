@@ -1,0 +1,26 @@
+image: node:alpine
+
+before_script:
+  - apk update && apk add --no-cache zip
+
+build-module:
+  stage: build
+  script:
+    - npm ci
+    - export MODULE_NAME=$(node -p -e "require('./package.json').name")
+    - export MANIFEST="$CI_PROJECT_URL/-/jobs/artifacts/$CI_COMMIT_REF_SLUG/raw/module.json?job=build-module"
+    - export DOWNLOAD="$CI_PROJECT_URL/-/jobs/artifacts/$CI_COMMIT_REF_SLUG/raw/$MODULE_NAME.zip?job=build-module"
+    - echo "Building $MODULE_NAME"
+    - npm run build
+    - echo "Building $MODULE_NAME module ZIP file"
+    - mv dist $MODULE_NAME
+    - cp $MODULE_NAME/module.json module.json
+    - zip -r $MODULE_NAME.zip $MODULE_NAME
+  artifacts:
+    paths:
+      - '*.zip'
+      - module.json
+  only:
+    refs:
+      - develop
+      - master
