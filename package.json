@@ -14,7 +14,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src",
     "lint:fix": "npm run lint -- --fix",
-    "build": "gulp build"
+    "build": "gulp build",
+    "release": "gulp zip"
   },
   "author": "Chad Keating (Sir Everard) <me@chadkeating.com>",
   "license": "MIT",
@@ -28,6 +29,7 @@
     "gulp": "^4.0.2",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
+    "gulp-zip": "^5.0.2",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "node-sass": "^4.13.0",

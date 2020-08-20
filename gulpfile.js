@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
 const rename = require('gulp-rename');
+const zip = require('gulp-zip');
 
 const rollup = require('rollup');
 const { terser } = require('rollup-plugin-terser');
@@ -91,6 +92,12 @@ gulp.task('styles', stylesTask);
 gulp.task('templates', templateTask);
 
 gulp.task('build', gulp.series(bundleTask, stylesTask, templateTask, moduleTask));
+
+gulp.task('zip', function () {
+	return gulp.src('./dist/**')
+		.pipe(zip('latest.zip'))
+		.pipe(gulp.dest('./releases'));
+});
 
 gulp.task('watch', () => {
 	gulp.watch('src/**/*.js', bundleTask);
