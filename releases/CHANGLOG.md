@@ -1,0 +1,1 @@
+- Prototype integration of Token Stamp 2 with Foundry Prototype Token dialog.
