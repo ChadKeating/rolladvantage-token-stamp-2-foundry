@@ -1,0 +1,14 @@
+{
+  "name": "rolladvantage-token-stamp-2-foundry",
+  "title": "RollAdvantage.com Token Stamp 2",
+  "description": "A token stamp based on Token Stamp 2 on RollAdvantage.com",
+  "version": "1.0.0",
+  "author": "Chad Keating (Sir Everard) <me@chadkeating.com>",
+  "scripts": [
+    "rolladvantage-token-stamp-2-foundry.js"
+  ],
+  "styles": [
+    "rolladvantage-token-stamp-2-foundry.css"
+  ],
+  "packs": []
+}
