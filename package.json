@@ -1,0 +1,45 @@
+{
+  "name": "rolladvantage-token-stamp-2-foundry",
+  "title": "RollAdvantage.com Token Stamp 2",
+  "version": "1.0.0",
+  "description": "A token stamp based on Token Stamp 2 on RollAdvantage.com",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src",
+    "lint:fix": "npm run lint -- --fix",
+    "build": "gulp build"
+  },
+  "author": "Chad Keating (Sir Everard) <me@chadkeating.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-foundry-vtt": "0.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "gulp": "^4.0.2",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "node-sass": "^4.13.0",
+    "prettier": "^1.18.2",
+    "rollup": "^1.25.2",
+    "rollup-plugin-terser": "^5.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run lint"
+    }
+  },
+  "lint-staged": {
+    "{src|test}/**/*.js": [
+      "npm run lint:fix",
+      "git add"
+    ]
+  },
+  "dependencies": {}
+}
