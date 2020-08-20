@@ -41,6 +41,8 @@ const moduleTask = (cb) => {
 		"readme": package.readme,
 		"changelog": package.changelog,
 		"bugs": package.bugs,
+		"minimumCoreVersion": package.minimumCoreVersion,
+		"compatibleCoreVersion": package.compatibleCoreVersion,
 		"scripts": [
 			`${moduleName}.js`
 		],
