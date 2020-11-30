@@ -86,14 +86,21 @@ const templateTask = (cb) => {
 	cb();
 };
 
+const outputToFoundryTask = (cb) =>{
+	const foundryPath = "C:\\FoundryVTT\\Data\\modules\\rolladvantage-token-stamp-2-foundry";
+	const mainPath = "./dist/**/*";
+	return gulp.src(mainPath)
+		.pipe(gulp.dest(foundryPath));
+};
 
 
 gulp.task('bundle', bundleTask);
 gulp.task('module', moduleTask);
 gulp.task('styles', stylesTask);
 gulp.task('templates', templateTask);
+gulp.task('toFoundry', outputToFoundryTask);
 
-gulp.task('build', gulp.series(bundleTask, stylesTask, templateTask, moduleTask));
+gulp.task('build', gulp.series(bundleTask, stylesTask, templateTask, moduleTask, outputToFoundryTask));
 
 gulp.task('zip', function () {
 	return gulp.src('./dist/**')

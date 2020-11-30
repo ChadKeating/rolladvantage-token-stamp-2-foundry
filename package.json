@@ -2,7 +2,7 @@
   "name": "rolladvantage-token-stamp-2-foundry",
   "title": "RollAdvantage.com Token Stamp 2",
   "version": "1.0.1",
-  "description": "A token stamp based on Token Stamp 2 on RollAdvantage.com",
+  "description": "Integration for Token Stamp 2 on RollAdvantage.com",
   "url": "https://github.com/ChadKeating/rolladvantage-token-stamp-2-foundry",
   "manifest": "https://raw.githubusercontent.com/ChadKeating/rolladvantage-token-stamp-2-foundry/master/dist/module.json",
   "download": "https://github.com/ChadKeating/rolladvantage-token-stamp-2-foundry/raw/master/releases/latest.zip",
@@ -17,7 +17,8 @@
     "lint": "eslint src",
     "lint:fix": "npm run lint -- --fix",
     "build": "gulp build",
-    "release": "gulp zip"
+    "release": "gulp zip",
+    "toFoundry": "gulp toFoundry"
   },
   "author": "Chad Keating (Sir Everard) <me@chadkeating.com>",
   "license": "MIT",

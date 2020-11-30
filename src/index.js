@@ -1,17 +1,11 @@
 import { canvasReady, ready } from "./hooks";
 
-//Hooks.on("canvasReady", canvasReady);
-//Hooks.on("ready", ready);
-
-Hooks.on('ready', () => {
-	const renderTokenConfig = `renderTokenConfig${game.system.id === 'pf1' ? 'PF' : ''}`;
-	Hooks.on(renderTokenConfig, RollAdvantageTokenStamp2.render);
-	RollAdvantageTokenStamp2.createDirectory();
-});
+// Hooks.on("canvasReady", canvasReady);
+// Hooks.on("ready", ready);
 
 const RollAdvantageTokenStamp2 = {
 	getSavePath: () => {
-		return "worlds/" + game.world.name + "/RollAdvantageTokens";
+		return "worlds/" + game.world.name + "/rolladvantage";
 	},
 	createDirectory: async () => {
 		var savePath = RollAdvantageTokenStamp2.getSavePath();
@@ -90,16 +84,34 @@ class TokenStampWrapper extends Application {
 
 	}
 
+	async close() {
+		window.removeEventListener("message", TokenStampWrapper.foundryImportCallback, false);
+		return super.close();
+	}
+
+	static foundryImportCallback(event) {
+		if (event.origin != "https://rolladvantage.com") {
+			return;
+		}
+
+		if (event.data.action == "importToken") {
+			importToken();
+		}
+	}
+
 	activateListeners(html) {
 		super.activateListeners(html);
 		var that = this;
-		html.on("click", "#ra-ts2-import-token-button", () => {
+
+		window.addEventListener("message", TokenStampWrapper.foundryImportCallback, false);
+		var importToken = () => {
 			var callback = (event) => {
 				if (event.origin != "https://rolladvantage.com") {
 					return;
 				}
 				window.removeEventListener("message", callback, false);
-				var prom = TokenStampWrapper.uploadToken(event.data.stampData, game.userId + "-" + Math.floor(Math.random() * 1000) + ".png");
+				var timeStamp = Math.floor(Math.floor(((Date.now() / 100000000) - Math.floor(Date.now() / 100000000)) * 100000000) / 100);
+				var prom = TokenStampWrapper.uploadToken(event.data.stampData, game.userId + "-" + calcTimeStamp + ".png");
 				prom.then(x => {
 					that.exportInputBox[0].value = x.path;
 					that.close();
@@ -111,7 +123,8 @@ class TokenStampWrapper extends Application {
 			iWindow.postMessage({
 				action: "getFoundryData"
 			}, "*");
-		});
+		};
+		html.on("click", "#ra-ts2-import-token-button", importToken);
 	}
 
 	/*
@@ -157,3 +170,9 @@ scrollY 	Array.<string>
 A list of unique CSS selectors which target containers that should have their vertical scroll positions preserved during a re-render.
 	**/
 }
+
+Hooks.on('ready', () => {
+	const renderTokenConfig = `renderTokenConfig${game.system.id === 'pf1' ? 'PF' : ''}`;
+	Hooks.on(renderTokenConfig, RollAdvantageTokenStamp2.render);
+	RollAdvantageTokenStamp2.createDirectory();
+});

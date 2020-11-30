@@ -1,7 +1,7 @@
 {
   "name": "rolladvantage-token-stamp-2-foundry",
   "title": "RollAdvantage.com Token Stamp 2",
-  "description": "A token stamp based on Token Stamp 2 on RollAdvantage.com",
+  "description": "Integration for Token Stamp 2 on RollAdvantage.com",
   "version": "1.0.1",
   "author": "Chad Keating (Sir Everard) <me@chadkeating.com>",
   "url": "https://github.com/ChadKeating/rolladvantage-token-stamp-2-foundry",

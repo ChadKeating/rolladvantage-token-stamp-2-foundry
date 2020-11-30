@@ -7,3 +7,6 @@
     max-width: 50px;
     border: 0;
     top: 3px; }
+
+#site-content {
+  margin-bottom: auto !important; }
