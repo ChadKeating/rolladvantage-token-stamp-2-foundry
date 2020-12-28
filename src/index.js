@@ -32,8 +32,8 @@ class TokenStampWrapper extends Application {
 		const options = super.defaultOptions;
 		options.template = "/modules/rolladvantage-token-stamp-2-foundry/templates/wrapper-template.html";
 		options.resizable = false;
-		options.width = 1263;
-		options.height = 937;
+		options.width = 1216;
+		options.height = 650;
 		options.classes = ["ts2-wrapper"];
 		options.title = "Token Stamp 2 - RollAdvantage.com";
 		return options;
@@ -80,22 +80,30 @@ class TokenStampWrapper extends Application {
 			ui.notifications.info(response.message);
 		}
 		return response;*/
-
-
 	}
 
 	async close() {
-		window.removeEventListener("message", TokenStampWrapper.foundryImportCallback, false);
+		window.removeEventListener("message", this.foundryImportCallback.bind(this), false);
 		return super.close();
 	}
 
-	static foundryImportCallback(event) {
+	foundryImportCallback(event) {
 		if (event.origin != "https://rolladvantage.com") {
 			return;
 		}
 
+		if(event.data.action == "sourceRegistered") {
+			TokenStampWrapper.sourceRegistered = true;
+		}
+
 		if (event.data.action == "importToken") {
-			importToken();
+			var that = this;
+			var timeStamp = Math.floor(Math.floor(((Date.now() / 100000000) - Math.floor(Date.now() / 100000000)) * 100000000) / 100);
+			var prom = TokenStampWrapper.uploadToken(event.data.stampData, game.userId + "-" + timeStamp + ".png");
+			prom.then(x => {
+				that.exportInputBox[0].value = x.path;
+				that.close();
+			});
 		}
 	}
 
@@ -103,28 +111,26 @@ class TokenStampWrapper extends Application {
 		super.activateListeners(html);
 		var that = this;
 
-		window.addEventListener("message", TokenStampWrapper.foundryImportCallback, false);
-		var importToken = () => {
-			var callback = (event) => {
-				if (event.origin != "https://rolladvantage.com") {
-					return;
-				}
-				window.removeEventListener("message", callback, false);
-				var timeStamp = Math.floor(Math.floor(((Date.now() / 100000000) - Math.floor(Date.now() / 100000000)) * 100000000) / 100);
-				var prom = TokenStampWrapper.uploadToken(event.data.stampData, game.userId + "-" + calcTimeStamp + ".png");
-				prom.then(x => {
-					that.exportInputBox[0].value = x.path;
-					that.close();
-				})
-			};
-			window.addEventListener("message", callback, false);
+		window.addEventListener("message", this.foundryImportCallback.bind(this), false);
 
-			var iWindow = document.getElementById('ra-ts2-iframe').contentWindow;
+		TokenStampWrapper.sourceRegistered = false;
+		var iWindow = document.getElementById('ra-ts2-iframe').contentWindow;
+		function waitForTokenStampLoaded() {
+			if(TokenStampWrapper.sourceRegistered) {
+				console.log("Source Registered");
+				return;
+			}
+
 			iWindow.postMessage({
-				action: "getFoundryData"
+				action: "registerSource"
 			}, "*");
-		};
-		html.on("click", "#ra-ts2-import-token-button", importToken);
+
+			if(that._element.length > 0) {
+				console.log("Waiting for TS");
+				setTimeout(waitForTokenStampLoaded, 500);
+			}
+		}
+		waitForTokenStampLoaded();
 	}
 
 	/*
