@@ -32,9 +32,9 @@ class TokenStampWrapper extends Application {
 		const options = super.defaultOptions;
 		options.template = "/modules/rolladvantage-token-stamp-2-foundry/templates/wrapper-template.html";
 		options.resizable = false;
-		options.width = 1216;
-		options.height = 650;
-		options.classes = ["ts2-wrapper"];
+		options.width = 841;
+		options.height = 658;
+		options.classes = ["ra-ts2-wrapper"];
 		options.title = "Token Stamp 2 - RollAdvantage.com";
 		return options;
 	}
