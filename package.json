@@ -9,6 +9,7 @@
   "readme": "https://github.com/ChadKeating/rolladvantage-token-stamp-2-foundry/blob/master/releases/README.md",
   "changelog": "https://github.com/ChadKeating/rolladvantage-token-stamp-2-foundry/blob/master/releases/CHANGELOG.md",
   "bugs": "https://github.com/ChadKeating/rolladvantage-token-stamp-2-foundry/issues",
+  "allowBugReporter": true,
   "minimumCoreVersion": "0.6.5",
   "compatibleCoreVersion": "0.7.9",
   "private": true,

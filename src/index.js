@@ -41,12 +41,6 @@ const RollAdvantageTokenStamp2 = {
 			if(isStampOpen)
 				return;
 
-			let fp = new FilePicker();
-			if(!fp.canUpload)
-			{
-				ui.notifications.error("You need File Upload permissions to use Token Stamp 2!")
-				return;
-			}
 			event.preventDefault()
 			const wrapper = new TokenStampWrapper();
 			wrapper.render(true);
@@ -65,7 +59,7 @@ class TokenStampWrapper extends Application {
 		options.template = "/modules/rolladvantage-token-stamp-2-foundry/templates/wrapper-template.html";
 		options.resizable = false;
 		options.width = 841;
-		options.height = 658;
+		options.height = 678;
 		options.classes = ["ra-ts2-wrapper"];
 		options.title = "Token Stamp 2 - RollAdvantage.com";
 		return options;
@@ -99,6 +93,7 @@ class TokenStampWrapper extends Application {
 
 		if(event.data.action == "sourceRegistered") {
 			TokenStampWrapper.sourceRegistered = true;
+
 		}
 
 		if (event.data.action == "importToken") {
@@ -110,6 +105,12 @@ class TokenStampWrapper extends Application {
 				that.exportInputBox[0].value = x.path;
 				that.close();
 			});
+		}
+
+		if (event.data.action == "importTokenUrl") {
+			let that = this;
+			that.exportInputBox[0].value = event.data.tokenUrl;
+			that.close();
 		}
 	}
 
@@ -124,7 +125,12 @@ class TokenStampWrapper extends Application {
 		let iWindow = document.getElementById('ra-ts2-iframe').contentWindow;
 		function waitForTokenStampLoaded() {
 			if(TokenStampWrapper.sourceRegistered) {
-				console.log("Source Registered");
+				console.log("Token Stamp Connected - Source Registered");
+				let fp = new FilePicker();
+				iWindow.postMessage({
+					action: "uploadPermission",
+					uploadPermission: fp.canUpload
+				}, "*");
 				return;
 			}
 
