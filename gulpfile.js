@@ -104,7 +104,7 @@ gulp.task('build', gulp.series(bundleTask, stylesTask, templateTask, moduleTask,
 
 gulp.task('zip', function () {
 	return gulp.src('./dist/**')
-		.pipe(zip('latest.zip'))
+		.pipe(zip('tokenstamp2-foundry-module-latest.zip'))
 		.pipe(gulp.dest('./releases'));
 });
 
