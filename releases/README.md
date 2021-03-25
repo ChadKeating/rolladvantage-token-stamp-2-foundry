@@ -1,6 +1,6 @@
 # Token Stamp 2 for Foundry VTT - RollAdvantage.com
 
-Integration of RolAdvantage's Token Stamp 2: https://RollAdvantage.com/TokenStamp2
+Integration of RolAdvantage's Token Stamp 2: https://RollAdvantage.com/tokenstamp
 
 A simple token creator within Foundry VTT.
 
