@@ -1,3 +1,6 @@
+#ra-ts2-app-window #ra-ts2-iframe {
+  border: none; }
+
 #ra-ts2-open-button {
   padding: 0 4px 0 4px; }
   #ra-ts2-open-button img {
