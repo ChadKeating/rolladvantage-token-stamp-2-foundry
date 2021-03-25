@@ -18,8 +18,7 @@
     "lint": "eslint src",
     "lint:fix": "npm run lint -- --fix",
     "build": "gulp build",
-    "release": "gulp zip",
-    "toFoundry": "gulp toFoundry"
+    "release": "gulp release"
   },
   "author": "Chad Keating [Sir Everard#1198]",
   "authors": [

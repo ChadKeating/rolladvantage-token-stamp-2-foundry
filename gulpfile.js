@@ -21,7 +21,7 @@ const bundleTask = () => {
 		]
 	}).then(bundle => {
 		return bundle.write({
-			file: `./dist/${moduleName}.js`,
+			file: `./devbuild/${moduleName}.js`,
 			format: 'iife',
 			sourcemap: true
 		});
@@ -59,11 +59,11 @@ const moduleTask = (cb) => {
 	}
 
 	const stylePath = `${moduleName}.css`;
-	if (fs.existsSync(`dist/${stylePath}`)) {
+	if (fs.existsSync(`devbuild/${stylePath}`)) {
 		module.styles.push(stylePath);
 	}
 
-	fs.writeFile('dist/module.json', JSON.stringify(module, null, '  '), cb);
+	fs.writeFile('devbuild/module.json', JSON.stringify(module, null, '  '), cb);
 };
 
 const stylesTask = (cb) => {
@@ -72,7 +72,7 @@ const stylesTask = (cb) => {
 		return gulp.src(mainPath)
 			.pipe(sass().on('error', sass.logError))
 			.pipe(rename(`${moduleName}.css`))
-			.pipe(gulp.dest('./dist'));
+			.pipe(gulp.dest('./devbuild'));
 	}
 	cb();
 };
@@ -81,18 +81,28 @@ const templateTask = (cb) => {
 	const mainPath = './templates/wrapper-template.html';
 	if (fs.existsSync(mainPath)) {
 		return gulp.src(mainPath)
-			.pipe(gulp.dest('./dist/templates'));
+			.pipe(gulp.dest('./devbuild/templates'));
 	}
 	cb();
 };
 
 const outputToFoundryTask = (cb) =>{
 	const foundryPath = "C:\\FoundryVTT\\Data\\modules\\rolladvantage-token-stamp-2-foundry";
-	const mainPath = "./dist/**/*";
+	const mainPath = "./devbuild/**/*";
 	return gulp.src(mainPath)
 		.pipe(gulp.dest(foundryPath));
 };
 
+const devToDist = (cb) =>{
+	return gulp.src( "./devbuild/**/*")
+		.pipe(gulp.dest("./dist"));
+};
+
+const zipBuild = () => {
+	return gulp.src('./dist/**')
+		.pipe(zip('tokenstamp2-foundry-module-latest.zip'))
+		.pipe(gulp.dest('./releases'));
+};
 
 gulp.task('bundle', bundleTask);
 gulp.task('module', moduleTask);
@@ -101,12 +111,7 @@ gulp.task('templates', templateTask);
 gulp.task('toFoundry', outputToFoundryTask);
 
 gulp.task('build', gulp.series(bundleTask, stylesTask, templateTask, moduleTask, outputToFoundryTask));
-
-gulp.task('zip', function () {
-	return gulp.src('./dist/**')
-		.pipe(zip('tokenstamp2-foundry-module-latest.zip'))
-		.pipe(gulp.dest('./releases'));
-});
+gulp.task('release', gulp.series(bundleTask, stylesTask, templateTask, moduleTask, devToDist, zipBuild));
 
 gulp.task('watch', () => {
 	gulp.watch('src/**/*.js', bundleTask);
