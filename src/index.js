@@ -161,7 +161,6 @@ Hooks.on('ready', () => {
 		onChange: value => RollAdvantageTokenStamp2.createDirectory()
 	});
 
-	const renderTokenConfig = `renderTokenConfig${game.system.id === 'pf1' ? 'PF' : ''}`;
-	Hooks.on(renderTokenConfig, RollAdvantageTokenStamp2.render);
+	Hooks.on("renderTokenConfig", RollAdvantageTokenStamp2.render);
 	RollAdvantageTokenStamp2.createDirectory();
 });
