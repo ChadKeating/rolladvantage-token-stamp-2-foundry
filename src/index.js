@@ -1,13 +1,13 @@
 const RollAdvantageTokenStamp2 = {
 	getSavePath: () => {
-		return "worlds/" + game.world.name + "/rolladvantage";
+		return game.settings.get(RollAdvantageTokenStamp2.moduleNamespace, RollAdvantageTokenStamp2.tokenPathSettingsKey);
 	},
 	createDirectory: async () => {
-		var savePath = RollAdvantageTokenStamp2.getSavePath();
-		var dir = await FilePicker.browse("data", savePath);
+		let savePath = RollAdvantageTokenStamp2.getSavePath();
+		let dir = await FilePicker.browse("data", savePath);
 		console.dir(dir);
 		if (dir == null || dir.target != savePath) {
-			FilePicker.createDirectory("data", savePath)
+			await FilePicker.createDirectory("data", savePath)
 		}
 	},
 	//https://stackoverflow.com/questions/50391422/detect-that-given-element-has-been-removed-from-the-dom-without-sacrificing-perf
@@ -52,6 +52,8 @@ const RollAdvantageTokenStamp2 = {
 		});
 	}
 };
+RollAdvantageTokenStamp2.moduleNamespace = "rolladvantage-token-stamp-2-foundry";
+RollAdvantageTokenStamp2.tokenPathSettingsKey = "token-save-path";
 
 class TokenStampWrapper extends Application {
 	static get defaultOptions() {
@@ -148,6 +150,17 @@ class TokenStampWrapper extends Application {
 }
 
 Hooks.on('ready', () => {
+
+	game.settings.register(RollAdvantageTokenStamp2.moduleNamespace, RollAdvantageTokenStamp2.tokenPathSettingsKey, {
+		name: "Token Stamp 2 Save Path",
+		hint: "The path tokens are saved to when imported to Foundry.",
+		scope: "world",
+		config: true,
+		type: String,
+		default: "worlds/" + game.world.name + "/rolladvantage",
+		onChange: value => RollAdvantageTokenStamp2.createDirectory()
+	});
+
 	const renderTokenConfig = `renderTokenConfig${game.system.id === 'pf1' ? 'PF' : ''}`;
 	Hooks.on(renderTokenConfig, RollAdvantageTokenStamp2.render);
 	RollAdvantageTokenStamp2.createDirectory();
