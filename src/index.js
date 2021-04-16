@@ -4,11 +4,12 @@ const RollAdvantageTokenStamp2 = {
 	},
 	createDirectory: async () => {
 		let savePath = RollAdvantageTokenStamp2.getSavePath();
-		let dir = await FilePicker.browse("data", savePath);
-		console.dir(dir);
-		if (dir == null || dir.target != savePath) {
-			await FilePicker.createDirectory("data", savePath)
-		}
+		await FilePicker.createDirectory("data", savePath).catch(err => {
+			if(err.indexOf("file already exists") > 0)
+				return; //Do nothing if the file already exists
+			console.error(err);
+			throw new Error(err);
+		});
 	},
 	//https://stackoverflow.com/questions/50391422/detect-that-given-element-has-been-removed-from-the-dom-without-sacrificing-perf
 	onRemoveHelper: (element, callback) => {
