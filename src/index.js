@@ -100,8 +100,8 @@ class TokenStampWrapper extends Application {
 
 		if (event.data.action == "importToken") {
 			let that = this;
-			let timeStamp = Math.floor(Math.floor(((Date.now() / 100000000) - Math.floor(Date.now() / 100000000)) * 100000000) / 100);
-			let prom = TokenStampWrapper.uploadToken(event.data.stampData, game.userId + "-" + timeStamp + ".png");
+			let tokenName = event.data.tokenName + "-" + Date.now().toString(36).slice(-6) + ".png";
+			let prom = TokenStampWrapper.uploadToken(event.data.stampData, tokenName);
 			prom
 			.then(x => {
 				that.exportInputBox[0].value = x.path;
