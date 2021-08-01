@@ -90,16 +90,16 @@ class TokenStampWrapper extends Application {
 	}
 
 	foundryImportCallback(event) {
-		if (event.origin != "https://rolladvantage.com") {
+		if (event.origin !== "https://rolladvantage.com") {
 			return;
 		}
 
-		if(event.data.action == "sourceRegistered") {
+		if(event.data.action === "sourceRegistered") {
 			TokenStampWrapper.sourceRegistered = true;
 
 		}
 
-		if (event.data.action == "importToken") {
+		if (event.data.action === "importToken") {
 			let that = this;
 			let tokenName = event.data.tokenName + "-" + Date.now().toString(36).slice(-6) + ".png";
 			let prom = TokenStampWrapper.uploadToken(event.data.stampData, tokenName);
@@ -110,7 +110,7 @@ class TokenStampWrapper extends Application {
 			});
 		}
 
-		if (event.data.action == "importTokenUrl") {
+		if (event.data.action === "importTokenUrl") {
 			let that = this;
 			that.exportInputBox[0].value = event.data.tokenUrl;
 			that.close();
@@ -142,7 +142,7 @@ class TokenStampWrapper extends Application {
 			}, "*");
 
 			if(that._element.length > 0) {
-				console.log("Waiting for TS");
+				console.log("Waiting for Token Stamp");
 				setTimeout(waitForTokenStampLoaded, 500);
 			}
 		}
