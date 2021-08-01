@@ -158,7 +158,7 @@ Hooks.on('ready', () => {
 		scope: "world",
 		config: true,
 		type: String,
-		default: "worlds/" + game.world.name + "/rolladvantage",
+		default: "worlds/" + (game.world.name || game.world.id) + "/rolladvantage",
 		onChange: value => RollAdvantageTokenStamp2.createDirectory()
 	});
 
