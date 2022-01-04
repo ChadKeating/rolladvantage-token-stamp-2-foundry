@@ -1,7 +1,7 @@
 {
   "name": "rolladvantage-token-stamp-2-foundry",
   "title": "Token Stamp 2 for Foundry VTT - RollAdvantage.com",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Integration for Token Stamp 2 on RollAdvantage.com",
   "url": "https://github.com/ChadKeating/rolladvantage-token-stamp-2-foundry",
   "manifest": "https://raw.githubusercontent.com/ChadKeating/rolladvantage-token-stamp-2-foundry/master/dist/module.json",

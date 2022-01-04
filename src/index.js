@@ -33,7 +33,7 @@ const RollAdvantageTokenStamp2 = {
 	render: async (config, html) => {
 
 		let tabSelector = '.tab[data-tab="appearance"]';
-		if(game.version <= "0.8.x")
+		if(game.data.version <= "0.8.x")
 			tabSelector = '.tab[data-tab="image"]';
 
 		const subHtml = html.find(tabSelector).find(".form-group .form-fields").first();
