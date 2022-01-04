@@ -31,7 +31,7 @@ const RollAdvantageTokenStamp2 = {
 		});
 	},
 	render: async (config, html) => {
-		var subHtml = html.find('.tab[data-tab="image"]').find(".form-group .form-fields").first();
+		var subHtml = html.find('.tab[data-tab="appearance"]').find(".form-group .form-fields").first();
 		subHtml.append("<button type='button' id='ra-ts2-open-button' title='Create Token' tabindex='-1'><img src='https://rolladvantage.com/assets/images/logo/default.png' /></button>");
 		subHtml.find("#ra-ts2-open-button").click(event => {
 
