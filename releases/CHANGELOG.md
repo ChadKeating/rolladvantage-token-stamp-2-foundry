@@ -1,3 +1,6 @@
+#### Version 1.2.x
+- Fixed: compatibility with 0.9.x - Thanks @LebombJames (LebombJames#1611)
+
 #### Version 1.1.x
 - Fixed: compatibility with 0.8.x
 - Fixed: refactored createDirectory method to catch errors correctly
